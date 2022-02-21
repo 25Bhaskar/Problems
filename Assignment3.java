@@ -1,28 +1,32 @@
-package MAP_16feb;
+package _17feb;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
+public class Assignment3 implements Runnable
+{
+	public static void main(String[] args) 
+	{
+		Assignment3 a= new Assignment3();
+		
+		Thread t1 = new Thread(a);
+		Thread t2 = new Thread(a);
+		Thread t3 = new Thread(a);
+		
+		t1.setName("th1");
+		t2.setName("th2");
+		t3.setName("th3");
+		
+		t1.setPriority(Thread.MAX_PRIORITY);
+		t2.setPriority(Thread.MIN_PRIORITY);
+		t3.setPriority(Thread.NORM_PRIORITY);
+		
+		t1.start();
+		t2.start();
+		t3.start();
+	}
 
-public class Assignment3 {
-	public static void main(String[] args) {
-				Properties pro = new Properties();
-				
-				pro.setProperty("Uttar Pradesh", "Lucknow");
-				pro.setProperty("Rajasthan", "Jaipur");
-				pro.setProperty("Bihar", "Patna");
-				pro.setProperty("Madhya Pradesh", "Bhopal");
-				pro.setProperty("Telengana","Hyderabad");
-				
-
-				Set<Entry<Object, Object>> set = pro.entrySet();
-				Iterator<Entry<Object, Object>> it = set.iterator();
-				while (it.hasNext()) 
-				{
-					Entry<Object, Object> me = it.next();
-					System.out.println(me);
-				}
-			}
+	@Override
+	public void run() {
+		for (int i = 0; i < 10; i++)
+			System.out.println(Thread.currentThread().getName()+ ": " + i+" ");		
+	}
 
 }

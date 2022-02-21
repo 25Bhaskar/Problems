@@ -1,53 +1,38 @@
-package MAP_16feb;
+package _17feb;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+public class Assignment2 implements Runnable {
+	static Thread Tho;
+	static Thread The;
 
-public class Assignment2 {
-
-	public static void main(String[] args) {
-		HashMap <Integer,String> m1=new HashMap();
-		m1.put(1, "string1");
-		m1.put(2, "string2");
-		m1.put(3, "string3");
-		m1.put(4, "string4");
-		m1.put(5, "string5");
-		m1.put(6, "string6");
-		Scanner sc=new Scanner(System.in);
-		//a>
-		System.out.println("Enter key you want to check (exist or not) :");
-		int key=sc.nextInt();
-		boolean k=m1.containsKey(key);
-		if (k)
-		{
-			System.out.println("Key Exist !");
-		}else
-		{
-			System.out.println("Key Does Not Exist !");
-		}
+	@Override
+	public void run() 
+	{	
+		try 
+		{if (Thread.currentThread().getName().equals("Tho")) {The.join();}} catch (InterruptedException e) {e.printStackTrace();}
 		
-		//b>
-		sc.nextLine();
-		System.out.println("Enter value you want to check (exist or not) :");
-		String value=sc.nextLine();
-		boolean s=m1.containsValue(value);
-		if (s)
+		for (int i = 1; i <= 20; i++) 
 		{
-			System.out.println("Value Exist !");
-		}else
-		{
-			System.out.println("Value Does Not Exist !");
+			if (Thread.currentThread().getName().equals("The")) 
+			{
+				if (i % 2 == 0) System.out.print(i+" ");
+			} 
+			if (Thread.currentThread().getName().equals("Tho")) 
+			{
+				if (i % 2 == 1) System.out.print(i+" ");
+			}
 		}
-		
-		System.out.println("---------MAP---------");
-		//c> Traversing a Map
-		for (Map.Entry <Integer,String> m: m1.entrySet())
-		{
-			System.out.print(m.getKey()+" : "+m.getValue());
-		}
-		
-
 	}
-
+	
+	public static void main(String[] args) 
+	{
+		Assignment2 A = new Assignment2();
+		Tho = new Thread(A);
+		The = new Thread(A);
+		
+		Tho.setName("Tho");
+		The.setName("The");
+		
+		Tho.start();
+		The.start();
+	}
 }
